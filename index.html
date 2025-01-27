@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate User</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #212121;
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .info-box {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box p {
+            font-size: 18px;
+            margin: 10px 0;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            background-color: #00C853;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .copy-btn:hover {
+            background-color: #00E676;
+            transform: scale(1.05);
+        }
+
+        .copy-btn:active {
+            background-color: #00B248;
+            transform: scale(0.95);
+        }
+
+        .notification {
+            font-size: 14px;
+            color: #27ae60;
+            margin-top: 15px;
+            display: none;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        footer a {
+            color: #00C853;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Key for Vicoin</h1>
+        <div class="info-box">
+            <p><span class="label">User ID:</span> <span id="user-id" class="value">Loading...</span></p>
+            <button class="copy-btn" id="copy-user-id">Copy User ID</button>
+        </div>
+
+        <div class="info-box">
+            <p><span class="label">Key:</span> <span id="key" class="value">Loading...</span></p>
+            <button class="copy-btn" id="copy-key">Copy Key</button>
+        </div>
+
+        <p class="notification" id="copy-notification">Copied to clipboard!</p>
+    </div>
+
+    <footer>
+        <p>Made by <a>Perfidanb</a></p>
+    </footer>
+
+    <script>
+        // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user');
+        const token = urlParams.get('key');
+
+        // Cập nhật nội dung trang
+        document.getElementById('user-id').textContent = userId || 'Not provided';
+        document.getElementById('key').textContent = redeemKey || 'Not provided';
+
+        // Hàm sao chép vào clipboard
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        // Xử lý sự kiện Copy cho User ID
+        document.getElementById('copy-user-id').addEventListener('click', () => {
+            const userIdText = document.getElementById('user-id').textContent;
+            copyToClipboard(userIdText);
+            showNotification();
+        });
+
+        // Xử lý sự kiện Copy cho Key
+        document.getElementById('copy-key').addEventListener('click', () => {
+            const keyText = document.getElementById('key').textContent;
+            copyToClipboard(keyText);
+            showNotification();
+        });
+
+        // Hiển thị thông báo sao chép
+        function showNotification() {
+            const notification = document.getElementById('copy-notification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
